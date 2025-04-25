@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const db = require('../../teste/database.js') // TODO - Replace with actual database connection
 const validator = require('validator');
+const db = require('../../teste/database.js') // TODO - Replace with actual database connection
 
 const generateToken = (user) => {
     return jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -111,8 +111,8 @@ const profile = async (req, res) => {
             return res.status(404).json({ message: 'User not found'});
         }
         // Remove password from user object before sending response
-        const { password, ...userWithoutPassword } = user;
-        res.status(200).json({ userWithoutPassword });
+        const { password, ...userInfo } = user;
+        res.status(200).json({ userInfo });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Database error' });
